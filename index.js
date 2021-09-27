@@ -1,53 +1,82 @@
 
 const main = document.querySelector('main')
-const commentList = document.getElementById('comment_container')
-// const form = document.querySelector('form')
-const comment = document.getElementById('comment')
+let submit = document.getElementById('btn')
+
+document.addEventListener('DOMContentLoaded', function () {
+  fetchBooks()
+})
+
 
 
 
 function fetchBooks() {
-  return fetch("https://swapi.dev/api/films")
+  fetch("https://swapi.dev/api/films")
     .then(resp => resp.json())
     .then(json => renderFilms(json.results))
+    .then(() => console.log("hi"))
 }
 
 function renderFilms(films) {
-  
+  console.log('hello')
   films.forEach(film => {
-    const div = document.createElement('div') 
+
+
+    const div = document.createElement('div')
+
+
     const form = document.createElement('form')
-      form.setAttribute("id", "myForm")
-    const y = document.createElement("textarea");
-      y.setAttribute("id", "input")
-        form.appendChild(y);
-    div.innerHTML = film.title
+    form.setAttribute("class", "hidden")
+
+    const h1 = document.createElement('h1')
+    h1.textContent = film.title
+    h1.addEventListener('click', (e) => {
+        form.classList.toggle('hidden')
+    })
+
+    const input = document.createElement("textarea");
+    input.setAttribute("placeholder", "Enter Comment")
+    form.appendChild(input);
+
+
+    const btn = document.createElement('button')
+    btn.setAttribute("type", "submit")
+    btn.textContent = "Submit"
+    form.appendChild(btn)
+
+    const commentDiv = document.createElement("div")
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const p = document.createElement('p')
+      p.textContent = input.value
+      commentDiv.appendChild(p)
+      input.value = ""
+    })
+
+
+
+
+
     main.appendChild(div)
-    div.append(form)
+    div.appendChild(h1)
+    div.appendChild(form)
+    div.appendChild(commentDiv)
+
+
   });
 }
 
-function renderComment(com){
-  let li = document.createElement('li')
-  li.textContent = com
-  commentList.appendChild(li)
-
-}
 
 
 
 
-    
 
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  fetchBooks()
-})
 
-// form.addEventListener('submit', (e) => {
-//   e.preventDefault()
-//   renderComment(e.target.comment.value)
-// })
+
+
+
+
 
