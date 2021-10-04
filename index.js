@@ -3,21 +3,20 @@ const main = document.querySelector('main')
 let submit = document.getElementById('btn')
 
 document.addEventListener('DOMContentLoaded', function () {
-  fetchBooks()
+  fetchfilms()
 })
 
 
 
 
-function fetchBooks() {
+function fetchfilms() {
   fetch("https://swapi.dev/api/films")
     .then(resp => resp.json())
-    .then(json => renderFilms(json.results))
-    .then(() => console.log("hi"))
+    .then(json => renderFilm(json.results))
 }
 
-function renderFilms(films) {
-  console.log('hello')
+function renderFilm(films) {
+  
   films.forEach(film => {
 
 
